@@ -1,0 +1,33 @@
+# Git
+.git/
+
+# NPM
+/node_modules/
+
+# TMP
+/tmp/
+
+# Builds
+/lib
+
+# Tests
+/coverage/
+
+# Logs
+/logs/
+/*.log
+
+# Docs
+/docs/
+/docs-api/
+
+# Config
+/config.yml
+
+# Misc
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+yarn-error.log
+
