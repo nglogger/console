@@ -7,11 +7,10 @@
 [![NPM Downloads][npm-dm-image]][npm-url]
 
 
-Console transport for @nglogger
+Console transport for [@nglogger][nglogger-url]
 
 
 --------------------------------------------------------------------------------
-
 
 ## Installation
 
@@ -24,14 +23,13 @@ $ yarn add @nglogger/core @nglogger/console
 
 --------------------------------------------------------------------------------
 
-
 ## Usage
 
 ```ts
 'use strict';
-import { NgModule }                                 from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import { LoggerModule }                             from '@nglogger/core';
+import { LoggerModule } from '@nglogger/core';
 import { ConsoleTransportModule, ConsoleTransport } from '@nglogger/console';
 
 
@@ -40,7 +38,7 @@ import { ConsoleTransportModule, ConsoleTransport } from '@nglogger/console';
     ConsoleTransportModule,
     LoggerModule.forRoot([
       ConsoleTransport
-    ]),
+    ])
   ],
   bootstrap: [
     AppComponent
@@ -50,7 +48,6 @@ export class AppModule { }
 ```
 
 --------------------------------------------------------------------------------
-
 
 ## Build
 
@@ -106,6 +103,7 @@ $ npm run test
 [license-url]: https://raw.githubusercontent.com/nglogger/console/master/LICENSE
 [changelog-url]: https://raw.githubusercontent.com/nglogger/console/master/CHANGELOG.md
 [npm-url]: https://www.npmjs.com/package/@nglogger/console
+[nglogger-url]: https://github.com/nglogger/core
 [npm-v-image]: https://img.shields.io/npm/v/@nglogger/console.svg
 [npm-dm-image]: https://img.shields.io/npm/dm/@nglogger/console.svg
 [travis-image]: https://img.shields.io/travis/nglogger/console/master.svg?label=linux

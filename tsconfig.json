@@ -9,6 +9,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
+    "alwaysStrict": true,
+    "newLine": "LF",
+    "strict": true,
+    "removeComments": false,
     "typeRoots": [
       "node_modules/@types"
     ],

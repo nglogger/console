@@ -4,6 +4,9 @@
 # NPM
 /node_modules/
 
+# Typings
+/typings
+
 # TMP
 /tmp/
 
@@ -23,11 +26,3 @@
 
 # Config
 /config.yml
-
-# Misc
-/libpeerconnection.log
-npm-debug.log
-testem.log
-/typings
-yarn-error.log
-
