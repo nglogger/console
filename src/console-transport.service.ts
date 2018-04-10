@@ -37,6 +37,7 @@ const LEVEL_STYLE: { [key in Level]: string } = {
 };
 
 const BRAKET_STYLE = `color:      ${COLOR_GREY}`;
+const COLON_STYLE  = `color:      ${COLOR_GREY}`;
 const DATE_STYLE   = `color:      ${COLOR_BLACK}`;
 const RESET_STYLE  = `background: ${COLOR_TRANSPARENT}; color: ${COLOR_BLACK}`;
 const SCOPE_STYLE  = `color:      ${COLOR_BLUE}`;
@@ -72,7 +73,7 @@ export class ConsoleTransport implements Transport {
 
     const consoleLevel = this._getConsoleLevel(level);
     const levelStyle = this._getLevelStyle(level);
-    const template = `%c[%c${date}%c]%c %c ${level} %c(%c${scope}%c)`;
+    const template = `%c[%c${date}%c]%c %c ${level} %c(%c${scope}%c)%c:`;
 
     const title = [
       template,
@@ -83,7 +84,8 @@ export class ConsoleTransport implements Transport {
       levelStyle,
       BRAKET_STYLE,
       SCOPE_STYLE,
-      BRAKET_STYLE
+      BRAKET_STYLE,
+      COLON_STYLE
     ];
 
     if (meta !== undefined) {
