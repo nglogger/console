@@ -5,8 +5,8 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "start": "tsc -w",
-    "build": "tsc",
+    "start": "ngc -w",
+    "build": "ngc",
     "test": "echo 'TODO'",
     "lint": "tslint -p .",
     "commitmsg": "commitlint -e $GIT_PARAMS",

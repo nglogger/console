@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "module": "es2015",
     "target": "es5",
     "alwaysStrict": true,
     "newLine": "LF",
@@ -20,5 +21,10 @@
       "es2016",
       "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true,
+    "strictInjectionParameters": true,
+    "annotateForClosureCompiler": true
   }
 }
