@@ -1,13 +1,12 @@
 'use strict';
-/** Imports */
+/* Imports */
 import { Injectable } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
-import { Transport, ILevel, IScope, IMeta } from '@nglogger/core';
+import { Level, Meta, Scope, Transport } from '@nglogger/core';
 
 
-/** Interfaces */
-export type IConsoleLevel =
+/* Interfaces */
+export type ConsoleLevel =
   | 'error'
   | 'info'
   | 'log'
@@ -16,9 +15,7 @@ export type IConsoleLevel =
   ;
 
 
-/** Constants */
-const DATE_FORMAT       = 'HH:mm:ss';
-
+/* Constants */
 const COLOR_TRANSPARENT = 'rgba(0, 0, 0, 0)';
 const COLOR_WHITE       = '#ffffff';
 const COLOR_BLACK       = '#1d1f21';
@@ -29,7 +26,7 @@ const COLOR_RED         = '#cc6666';
 const COLOR_PURPLE      = '#b294bb';
 const COLOR_BLUE        = '#0074d9';
 
-const LEVEL_STYLE: { [key in ILevel]: string } = {
+const LEVEL_STYLE: { [key in Level]: string } = {
   fatal:   `background: ${COLOR_RED};    color: ${COLOR_WHITE}`,
   error:   `background: ${COLOR_RED};    color: ${COLOR_WHITE}`,
   warn:    `background: ${COLOR_AQUA};   color: ${COLOR_WHITE}`,
@@ -45,41 +42,79 @@ const RESET_STYLE  = `background: ${COLOR_TRANSPARENT}; color: ${COLOR_BLACK}`;
 const SCOPE_STYLE  = `color:      ${COLOR_BLUE}`;
 
 
+/* Helpers */
+function stubZero(val: number, count: number): string {
+  const strVal = `${val}`;
+  const len = strVal.length;
+
+  if (len >= count) {
+    return strVal;
+  }
+
+  let res = '';
+
+  for (let i = 0, ii = count - len; i < ii; i++) {
+    res += '0';
+  }
+
+  res += strVal;
+
+  return res;
+}
+
+
 @Injectable()
 export class ConsoleTransport implements Transport {
   private _console: Console = console;
 
-  constructor(
-    private datePipe: DatePipe
-  ) {}
-
-  log(level: ILevel, scope: IScope, subject: string, meta?: IMeta): Promise<void> {
+  log(level: Level, scope: Scope, subject: string, meta?: Meta): void {
     const date = this._getDate();
 
-    console[this._getConsoleLevel(level)](`%c[%c${date}%c]%c %c ${level} %c(%c${scope}%c)`, ...[
+    const consoleLevel = this._getConsoleLevel(level);
+    const levelStyle = this._getLevelStyle(level);
+    const template = `%c[%c${date}%c]%c %c ${level} %c(%c${scope}%c)`;
+
+    const title = [
+      template,
       BRAKET_STYLE,
       DATE_STYLE,
       BRAKET_STYLE,
       RESET_STYLE,
-      this._getLevelStyle(level),
+      levelStyle,
       BRAKET_STYLE,
       SCOPE_STYLE,
-      BRAKET_STYLE,
-    ], subject, meta ? meta : '');
+      BRAKET_STYLE
+    ];
 
-    return Promise.resolve();
+    if (meta !== undefined) {
+      this._console[consoleLevel](...title, subject, meta);
+    } else {
+      this._console[consoleLevel](...title, subject);
+    }
   }
 
+  // tslint:disable-next-line:prefer-function-over-method
   private _getDate(): string {
-    const now = Date.now();
+    const now = new Date();
+    const h = now.getHours();
+    const m = now.getMinutes();
+    const s = now.getSeconds();
+    const ms = now.getMilliseconds();
 
-    const hhMmSs = this.datePipe.transform(now, DATE_FORMAT);
-    const sss    = now.toString().slice(-3);
+    // tslint:disable-next-line:no-magic-numbers
+    const hh = stubZero(h, 2);
+    // tslint:disable-next-line:no-magic-numbers
+    const mm = stubZero(m, 2);
+    // tslint:disable-next-line:no-magic-numbers
+    const ss = stubZero(s, 2);
+    // tslint:disable-next-line:no-magic-numbers
+    const sss = stubZero(ms, 3);
 
-    return `${hhMmSs}.${sss}`;
+    return `${hh}:${mm}:${ss}.${sss}`;
   }
 
-  private _getConsoleLevel(level: ILevel): IConsoleLevel {
+  // tslint:disable-next-line:prefer-function-over-method
+  private _getConsoleLevel(level: Level): ConsoleLevel {
     switch (level) {
       case 'fatal':     return 'error';
       case 'error':     return 'error';
@@ -92,7 +127,8 @@ export class ConsoleTransport implements Transport {
     }
   }
 
-  private _getLevelStyle(level: ILevel): string {
+  // tslint:disable-next-line:prefer-function-over-method
+  private _getLevelStyle(level: Level): string {
     const style = LEVEL_STYLE[level];
 
     return style !== undefined ? style : RESET_STYLE;
