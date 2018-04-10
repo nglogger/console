@@ -54,7 +54,7 @@
   },
   "peerDependencies": {
     "@angular/core": "^4.0.0 || ^5.0.0",
-    "@nglogger/core": "0.0.2",
+    "@nglogger/core": "0.0.3",
     "rxjs": "*"
   },
   "repository": {
