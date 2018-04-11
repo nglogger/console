@@ -4,7 +4,6 @@
   "description": "Console transport for @nglogger",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "module": "lib/console-transport.module.js",
   "scripts": {
     "start": "ngc -w",
     "build": "ngc",
